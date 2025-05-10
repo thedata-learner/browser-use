@@ -1,0 +1,26 @@
+name: Build and Export Docker Image
+
+on:
+  workflow_dispatch:  # 可手动点击运行
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t webagent:latest .
+
+      - name: Save Docker image to tar file
+        run: docker save webagent:latest -o webagent.tar
+
+      - name: Upload tar as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: webagent-docker
+          path: webagent.tar
