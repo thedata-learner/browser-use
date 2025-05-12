@@ -1,11 +1,11 @@
-name: export-docker-image
+name: Export Docker Image
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # 手动触发
 
 jobs:
   build:
-    runs-on: ubuntu-22.04  # 使用更稳定版本的 runner
+    runs-on: ubuntu-22.04  # 推荐不要用 ubuntu-24.04
 
     steps:
       - name: 🧾 获取项目代码
@@ -18,8 +18,9 @@ jobs:
         run: docker save my-image | gzip > my-image.tar.gz
 
       - name: ☁️ 上传压缩包供下载
-        uses: actions/upload-artifact@v2  # ✅ 改成 v2
+        uses: actions/upload-artifact@v3
         with:
           name: docker-image
           path: my-image.tar.gz
+
 
