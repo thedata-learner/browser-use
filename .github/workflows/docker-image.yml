@@ -1,26 +1,25 @@
-name: Build and Export Docker Image
+name: export-docker-image
 
 on:
-  workflow_dispatch:  # 可手动点击运行
-  push:
-    branches: [ "main" ]
+  workflow_dispatch:  # 手动触发按钮
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: ⬇️ 下载代码
+        uses: actions/checkout@v3
 
-      - name: Build Docker image
-        run: docker build -t webagent:latest .
+      - name: 🏗️ 构建 Docker 镜像
+        run: docker build -t my-image .
 
-      - name: Save Docker image to tar file
-        run: docker save webagent:latest -o webagent.tar
+      - name: 📦 导出镜像为 .tar.gz
+        run: docker save my-image | gzip > my-image.tar.gz
 
-      - name: Upload tar as artifact
-        uses: actions/upload-artifact@v4
+      - name: ☁️ 上传为下载文件（artifact）
+        uses: actions/upload-artifact@v3
         with:
-          name: webagent-docker
-          path: webagent.tar
+          name: docker-image
+          path: my-image.tar.gz
+
