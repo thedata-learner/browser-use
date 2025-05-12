@@ -1,11 +1,11 @@
 name: export-docker-image
 
 on:
-  workflow_dispatch:  # 手动点击运行
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04  # ✅ 改这里，别用 ubuntu-24.04
 
     steps:
       - name: 🧾 获取项目代码
