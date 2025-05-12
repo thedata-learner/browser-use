@@ -1,25 +1,24 @@
 name: export-docker-image
 
 on:
-  workflow_dispatch:  # 手动触发按钮
+  workflow_dispatch:  # 手动点击运行
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ 下载代码
+      - name: 🧾 获取项目代码
         uses: actions/checkout@v3
 
-      - name: 🏗️ 构建 Docker 镜像
+      - name: 🛠 构建 Docker 镜像
         run: docker build -t my-image .
 
-      - name: 📦 导出镜像为 .tar.gz
+      - name: 📦 保存镜像为压缩包
         run: docker save my-image | gzip > my-image.tar.gz
 
-      - name: ☁️ 上传为下载文件（artifact）
+      - name: ☁️ 上传压缩包供下载
         uses: actions/upload-artifact@v3
         with:
           name: docker-image
           path: my-image.tar.gz
-
