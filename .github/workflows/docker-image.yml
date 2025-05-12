@@ -18,7 +18,7 @@ jobs:
         run: docker save my-image | gzip > my-image.tar.gz
 
       - name: ☁️ 上传压缩包供下载
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docker-image
           path: my-image.tar.gz
